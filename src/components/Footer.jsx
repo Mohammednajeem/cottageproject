@@ -15,7 +15,7 @@ function Footer() {
       <hr className="hori"/>
       <h3>The Reed’s Cottage</h3>
       <p className="cozyy">Your Cozy Escape in the Heart of Kodaikanal</p>
-      <div class="links">
+      <div className="links">
         <a href=""><FaLocationDot /> Direction</a>
         <a href=""><FaPhoneAlt /> +91 9500996592</a>
       </div>
