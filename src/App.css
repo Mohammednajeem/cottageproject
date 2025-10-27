@@ -71,7 +71,12 @@ body {
   transform: translateY(20px);
   animation: fadeUp 1s ease forwards 1s; /* slight delay */
 }
-
+/* Focus animation for subtext */
+.hero-content p:focus {
+  color: #D0D0D0; /* Slightly lighter color on focus */
+  outline: none;
+  box-shadow: 0 0 8px rgba(192, 192, 192, 0.5); /* Subtle glow for focus*/
+}
 /* ========================= */
 /* ANIMATIONS */
 /* ========================= */
@@ -156,7 +161,6 @@ body {
 
 
 
-
 /* About Section */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
 
@@ -182,7 +186,6 @@ body {
   z-index: 1;
 }
 
-
 /* Paragraph above images */
 .about-description {
   margin: 0; 
@@ -198,6 +201,10 @@ body {
   color: #8B9F8B;
   opacity: 0;
   transform: translateY(30px);
+}
+
+/* Trigger animation when section is visible */
+.about-section.is-visible .about-description {
   animation: fadeUp 1s ease-out forwards 0.3s;
 }
 
@@ -210,17 +217,19 @@ body {
   flex-wrap: wrap;
   padding-bottom: 100px;
   opacity: 0;
+}
+
+/* Trigger animation when section is visible */
+.about-section.is-visible .about-features {
   animation: fadeIn 1.2s ease-in forwards 0.6s;
 }
 
 .feat1 {
   margin-top: 200px;
-  animation-delay: 0.6s;
 }
 
 .feat2 {
   margin-top: 100px;
-  animation-delay: 0.8s;
 }
 
 /* Each feature item */
@@ -229,7 +238,19 @@ body {
   max-width: 360px;
   opacity: 0;
   transform: translateY(40px);
+}
+
+/* Trigger animation when section is visible, with individual delays */
+.about-section.is-visible .feature-item {
   animation: fadeUp 1.2s ease forwards;
+}
+
+.about-section.is-visible .feat1 {
+  animation-delay: 0.6s;
+}
+
+.about-section.is-visible .feat2 {
+  animation-delay: 0.8s;
 }
 
 /* Circular images */
@@ -248,6 +269,13 @@ body {
   box-shadow: 0 0 30px rgba(139, 159, 139, 0.6);
 }
 
+/* Focus effect for images */
+.feature-item img:focus {
+  transform: scale(1.08);
+  box-shadow: 0 0 30px rgba(139, 159, 139, 0.6);
+  outline: none; /* Remove default outline */
+}
+
 /* Captions below */
 .feature-item p {
   margin-top: 15px;
@@ -257,8 +285,16 @@ body {
   transition: color 0.3s ease;
 }
 
+/* Hover effect for captions */
 .feature-item:hover p {
   color: #8B9F8B;
+}
+
+/* Focus effect for captions */
+.feature-item p:focus {
+  color: #8B9F8B;
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 8px rgba(139, 159, 139, 0.5); /* Subtle glow for focus */
 }
 
 /* ========================= */
@@ -372,24 +408,43 @@ body {
   }
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
 
-
-/* Gallery Section */
+/* ============================= */
+/* BASE GALLERY STYLES */
+/* ============================= */
 .gallery {
   padding: 80px 20px;
   background-color: #0e1712;
   text-align: center;
   overflow: hidden;
+  position: relative;
+  opacity: 0; /* Initial state */
+  transform: translateY(30px); /* Initial state */
 }
 
-/* Smooth fade for section load */
-.gallery {
-  opacity: 0;
-  transform: translateY(30px);
+/* Trigger animation when visible */
+.gallery.is-visible {
   animation: fadeUp 1.2s ease forwards;
 }
 
-/* Section header */
+/* Overlay for background image */
+.gallery::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3); /* Added for consistency with other sections */
+  z-index: 0;
+}
+
+.gallery > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================= */
+/* SECTION HEADER */
+/* ============================= */
 .headers {
   font-family: 'Marcellus', serif;
   font-weight: 400;
@@ -397,17 +452,22 @@ body {
   font-size: 54px;
   line-height: 100%;
   letter-spacing: 0;
-  color: #172817;
+  color: #8B9F8B; /* Changed to match other sections */
   text-align: left;
   margin-left: 100px;
   margin-bottom: 20px;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 1s ease forwards;
-  animation-delay: 0.3s;
+  opacity: 0; /* Initial state */
+  transform: translateY(20px); /* Initial state */
 }
 
-/* ====== Base Layout ====== */
+/* Trigger animation when visible */
+.gallery.is-visible .headers {
+  animation: fadeUp 1s ease forwards 0.3s;
+}
+
+/* ============================= */
+/* BASE LAYOUT */
+/* ============================= */
 .gallery-grid {
   display: flex;
   flex-direction: column;
@@ -417,19 +477,29 @@ body {
   margin: 0 auto;
   justify-content: center;
   align-items: center;
+  opacity: 0; /* Initial state */
+  transform: translateY(30px); /* Initial state */
 }
 
-/* Image container with animation */
+/* Trigger animation when visible */
+.gallery.is-visible .gallery-grid {
+  animation: fadeUp 1.3s ease forwards 0.5s;
+}
+
+/* Image container */
 .outerimage {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fadeUp 1.3s ease forwards;
-  animation-delay: 0.5s;
+  opacity: 0; /* Initial state */
+  transform: translateY(30px); /* Initial state */
+}
+
+/* Trigger animation when visible */
+.gallery.is-visible .outerimage {
+  animation: fadeUp 1.3s ease forwards 0.5s;
 }
 
 /* Inner image group */
@@ -439,22 +509,39 @@ body {
   gap: 10px;
 }
 
-/* ====== Image Styles ====== */
-.ima1, .ima2, .ima4 {
+/* ============================= */
+/* IMAGE STYLES */
+/* ============================= */
+.ima1,
+.ima2,
+.ima4 {
   object-fit: cover;
   border-radius: 8px;
   transition: all 0.5s ease;
   cursor: pointer;
   filter: brightness(0.9);
-  opacity: 0;
-  transform: scale(0.95);
-  animation: fadeZoom 1.2s ease forwards;
+  opacity: 0; /* Initial state */
+  transform: scale(0.95); /* Initial state */
 }
 
-/* Different animation delay for each image to create a wave effect */
-.ima1 { animation-delay: 0.6s; width: 700px; height: 930px; }
-.ima2 { animation-delay: 0.8s; width: 580px; height: 460px; }
-.ima4 { animation-delay: 1s;   height: 600px; width: 1290px; }
+/* Trigger animations when visible with different delays */
+.gallery.is-visible .ima1 {
+  animation: fadeZoom 1.2s ease forwards 0.6s;
+  width: 700px;
+  height: 930px;
+}
+
+.gallery.is-visible .ima2 {
+  animation: fadeZoom 1.2s ease forwards 0.8s;
+  width: 580px;
+  height: 460px;
+}
+
+.gallery.is-visible .ima4 {
+  animation: fadeZoom 1.2s ease forwards 1s;
+  height: 600px;
+  width: 1290px;
+}
 
 /* Hover effect: smooth zoom + slight brightness */
 .ima1:hover,
@@ -465,9 +552,9 @@ body {
   box-shadow: 0 0 25px rgba(139, 159, 139, 0.4);
 }
 
-/* ======================================= */
+/* ============================= */
 /* ANIMATIONS */
-/* ======================================= */
+/* ============================= */
 @keyframes fadeUp {
   0% {
     opacity: 0;
@@ -490,9 +577,9 @@ body {
   }
 }
 
-/* ================================================= */
+/* ============================= */
 /* TABLET VIEW (Up to 1024px wide) */
-/* ================================================= */
+/* ============================= */
 @media (max-width: 1024px) {
   .headers {
     font-size: 44px;
@@ -526,9 +613,9 @@ body {
   }
 }
 
-/* ================================================= */
+/* ============================= */
 /* MOBILE VIEW (Up to 768px wide) */
-/* ================================================= */
+/* ============================= */
 @media (max-width: 768px) {
   .gallery {
     padding: 50px 10px;
@@ -560,9 +647,9 @@ body {
   }
 }
 
-/* ================================================= */
+/* ============================= */
 /* SMALL MOBILE VIEW (Up to 480px wide) */
-/* ================================================= */
+/* ============================= */
 @media (max-width: 480px) {
   .headers {
     font-size: 28px;
@@ -585,26 +672,40 @@ body {
   }
 }
 
-
-
-/* Attractions */
-
 @import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
 
+/* ============================= */
+/* BASE SECTION STYLES */
+/* ============================= */
 .attraction-section {
   padding: 80px 20px;
   background-color: #0e1712;
   text-align: center;
   color: white;
   font-family: "Marcellus", serif;
+  position: relative;
 }
 
-/* ✅ NEW DESKTOP STYLES START */
+/* Overlay for background image */
+.attraction-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 0;
+}
+
 .attraction-main {
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 1;
 }
 
+/* ============================= */
+/* TITLE STYLES */
+/* ============================= */
 .attraction-title h2 {
   text-align: left;
   font-family: 'Marcellus', serif;
@@ -617,6 +718,9 @@ body {
   color: #8B9F8B;
 }
 
+/* ============================= */
+/* CAROUSEL CONTAINER */
+/* ============================= */
 .attraction-visit {
   display: flex;
   flex-direction: column;
@@ -648,14 +752,6 @@ body {
   gap: 10px;
 }
 
-img {
-  height: 300px;
-  max-width: 100%;
-  object-fit: cover;
-  display: block;
-  margin: 0 auto;
-}
-
 .attraction-slide {
   flex: 1;
   border-radius: 0.75rem;
@@ -668,47 +764,31 @@ img {
   align-items: center;
 }
 
+img {
+  height: 300px;
+  max-width: 100%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+}
+
 .attraction-slide:hover {
   flex: 2.0;
 }
 
-.attraction-content {
-  width: 100%;
-  text-align: center;
-  padding: 50px;
-  opacity: 0;
-  animation: fadeIn 0.5s ease-in-out forwards;
+/* Hide content on slide hover (desktop only) */
+@media (min-width: 993px) {
+  .attraction-slide:hover ~ .attraction-content,
+  .attraction-slide:hover + .attraction-content {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
 }
 
-.header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.attraction-content h3 {
-  font-size: 36px;
-  margin: 0;
-}
-
-.para1 {
-  /* display: flex; */
-  text-align: left;
-  font-size: 18px;
-  line-height: 1.5;
-  /* margin: 0 auto; */
-  max-width: 80%;
-}
-
-.attraction-links {
-  width: 100px;
-  padding: 10px;
-  background-color: #8B9F8B;
-  color: #000;
-  text-decoration: none;
-}
-
+/* ============================= */
+/* CAROUSEL ARROWS */
+/* ============================= */
 .carousel-arrows {
   position: absolute;
   top: 50%;
@@ -721,21 +801,74 @@ img {
 }
 
 .carousel-arrows button {
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   color: white;
   border: none;
   padding: 10px;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+.carousel-arrows button:hover {
+  background: rgba(0, 0, 0, 0.7);
 }
-/* ✅ NEW DESKTOP STYLES END */
 
+/* ============================= */
+/* CONTENT STYLES */
+/* ============================= */
+.attraction-content {
+  width: 100%;
+  text-align: center;
+  padding: 50px;
+  transition: opacity 0.3s ease, visibility 0.3s ease; /* For hover effect */
+}
 
-/* Tablet layout */
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.attraction-content h3 {
+  font-family: 'Marcellus', serif;
+  font-size: 36px;
+  margin: 0;
+  color: #bfbfbf;
+}
+
+.para1 {
+  font-family: 'Poppins', sans-serif;
+  text-align: left;
+  font-size: 18px;
+  line-height: 1.5;
+  max-width: 80%;
+  margin: 0 auto;
+  color: #bfbfbf;
+}
+
+.attraction-links {
+  width: 100px;
+  padding: 10px;
+  background-color: #8B9F8B;
+  color: #000;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  transition: background 0.3s ease;
+}
+
+.attraction-links:hover {
+  background-color: #b3c4b3;
+}
+
+/* ============================= */
+/* TABLET LAYOUT (426px - 992px) */
+/* ============================= */
 @media (min-width: 426px) and (max-width: 992px) {
   .carousel-arrows {
     position: absolute;
@@ -794,10 +927,34 @@ img {
       0 0 15px rgba(255, 255, 255, 0.1);
     transition: all 0.4s ease;
   }
+
+  .attraction-title h2 {
+    font-size: 40px;
+    margin-left: 30px;
+  }
+
+  .attraction-visit {
+    padding: 40px 20px;
+    min-width: auto;
+  }
+
+  .attraction-content {
+    padding: 30px;
+  }
+
+  .attraction-content h3 {
+    font-size: 28px;
+  }
+
+  .para1 {
+    font-size: 16px;
+    max-width: 90%;
+  }
 }
 
-/* Mobile layout */
-/* ✅ Improved Mobile layout */
+/* ============================= */
+/* MOBILE LAYOUT (max-width: 425px) */
+/* ============================= */
 @media (max-width: 425px) {
   .carousel-arrows {
     position: absolute;
@@ -870,11 +1027,6 @@ img {
 
 
 
-
-
-
-/* Footer */
-
 @import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 
@@ -887,8 +1039,12 @@ img {
   padding: 40px 20px;
   color: #bfbfbf;
   overflow: hidden;
-  opacity: 0;
-  transform: translateY(40px);
+  opacity: 0; /* Initial state */
+  transform: translateY(40px); /* Initial state */
+}
+
+/* Trigger animation when visible */
+.footer.is-visible {
   animation: fadeUp 1.5s ease forwards;
 }
 
@@ -901,10 +1057,13 @@ img {
   background-color: #8B9F8B;
   border: none;
   margin: 0 auto;
-  opacity: 0;
-  transform: scaleX(0);
-  animation: expandLine 1.5s ease forwards;
-  animation-delay: 0.5s;
+  opacity: 0; /* Initial state */
+  transform: scaleX(0); /* Initial state */
+}
+
+/* Trigger animation when visible */
+.footer.is-visible .hori {
+  animation: expandLine 1.5s ease forwards 0.5s;
 }
 
 /* ============================= */
@@ -918,44 +1077,67 @@ img {
   font-size: 96px;
   line-height: 100%;
   color: #8B9F8B;
-  opacity: 0;
-  transform: translateY(40px);
-  animation: fadeUp 1.2s ease forwards;
-  animation-delay: 0.8s;
+  opacity: 0; /* Initial state */
+  transform: translateY(40px); /* Initial state */
 }
 
+/* Trigger animation when visible */
+.footer.is-visible h3 {
+  animation: fadeUp 1.2s ease forwards 0.8s;
+}
 
+/* ============================= */
 /* SUBTEXT */
-
+/* ============================= */
 .cozyy {
   font-family: 'Poppins', sans-serif;
   font-weight: 300;
   font-size: 24px;
   color: #8B9F8B;
   line-height: 100%;
-  /* margin-top: -70px; */
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 1.2s ease forwards;
-  animation-delay: 1.2s;
+  opacity: 0; /* Initial state */
+  transform: translateY(20px); /* Initial state */
 }
-.para2{
+
+/* Trigger animation when visible */
+.footer.is-visible .cozyy {
+  animation: fadeUp 1.2s ease forwards 1.2s;
+}
+
+/* ============================= */
+/* ADDRESS */
+/* ============================= */
+.para2 {
   margin-top: 15px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+  color: #bfbfbf;
+  opacity: 0; /* Initial state */
+  transform: translateY(20px); /* Initial state */
 }
 
+/* Trigger animation when visible */
+.footer.is-visible .para2 {
+  animation: fadeUp 1.2s ease forwards 1.8s;
+}
 
+/* ============================= */
 /* LINK BUTTONS */
-
+/* ============================= */
 .links {
   display: flex;
   gap: 50px;
   justify-content: center;
   align-items: center;
   margin-top: 40px;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 1.2s ease forwards;
-  animation-delay: 1.6s;
+  opacity: 0; /* Initial state */
+  transform: translateY(20px); /* Initial state */
+}
+
+/* Trigger animation when visible */
+.footer.is-visible .links {
+  animation: fadeUp 1.2s ease forwards 1.6s;
 }
 
 .links a {
@@ -969,6 +1151,9 @@ img {
   font-weight: 400;
   letter-spacing: 0.5px;
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 /* Smooth hover glow + lift */
@@ -979,9 +1164,9 @@ img {
   box-shadow: 0 0 15px rgba(139, 159, 139, 0.5);
 }
 
-
+/* ============================= */
 /* ANIMATIONS */
-
+/* ============================= */
 @keyframes fadeUp {
   0% {
     opacity: 0;
@@ -1004,9 +1189,9 @@ img {
   }
 }
 
-
+/* ============================= */
 /* TABLET VIEW (Up to 1024px) */
-
+/* ============================= */
 @media (max-width: 1024px) {
   .footer h3 {
     font-size: 64px;
@@ -1015,7 +1200,10 @@ img {
 
   .cozyy {
     font-size: 20px;
-    /* margin-top: -40px; */
+  }
+
+  .para2 {
+    font-size: 16px;
   }
 
   .links {
@@ -1028,9 +1216,9 @@ img {
   }
 }
 
-
+/* ============================= */
 /* MOBILE VIEW (Up to 600px) */
-
+/* ============================= */
 @media (max-width: 600px) {
   .footer {
     padding: 30px 10px;
@@ -1043,7 +1231,10 @@ img {
 
   .cozyy {
     font-size: 18px;
-    /* margin-top: -20px; */
+  }
+
+  .para2 {
+    font-size: 14px;
   }
 
   .links {
@@ -1061,8 +1252,6 @@ img {
     height: 2px;
   }
 }
-
-
 
 
 
@@ -1253,9 +1442,42 @@ img {
 }
 
 
-
 /* popup */
 /* Overlay — blurry black background */
+/* ---------- APP LAYOUT ---------- */
+.app {
+  position: relative;
+  overflow-x: hidden;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ---------- BOOK NOW BUTTON ---------- */
+.book-now {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #8ea38f;
+  color: black;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  z-index: 100000;
+}
+
+.book-now:hover {
+  background: #7a917c;
+  transform: scale(1.05);
+}
+
+/* ---------- POPUP OVERLAY ---------- */
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -1264,50 +1486,44 @@ img {
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
+  z-index: 99999 !important;
+  opacity: 0;
+  animation: fadeIn 0.4s ease forwards;
 }
 
-/* Popup content — frosted glass style */
+/* ---------- POPUP CONTENT ---------- */
 .popup-content {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(18px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   padding: 30px 50px 30px 30px;
-  border-radius: 12px;
+  border-radius: 14px;
   width: 400px;
   color: #fff;
   position: relative;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  animation: popupFadeIn 0.4s ease forwards;
 }
 
-.success-message {
-  color: #4caf50;
-  margin-top: 10px;
-  font-weight: 600;
-}
-
-
-/* Close button */
+/* ---------- CLOSE BUTTON ---------- */
 .close {
   position: absolute;
   top: 10px;
   right: 15px;
-  font-size: 24px;
-  color: #fff;
+  font-size: 26px;
+  color: black;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: transform 0.2s ease;
 }
 
 .close:hover {
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
-/* Form styling */
+/* ---------- FORM ELEMENTS ---------- */
 form {
   display: flex;
   flex-direction: column;
@@ -1327,14 +1543,14 @@ textarea {
   resize: none;
 }
 
-/* Submit button */
+/* ---------- SUBMIT BUTTON ---------- */
 button[type="submit"] {
   display: flex;
   margin: 10px auto 0;
   background: #8ea38f;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: black;
   width: 200px;
   border: none;
   padding: 10px;
@@ -1349,64 +1565,56 @@ button[type="submit"]:hover {
   transform: scale(1.05);
 }
 
-/* 🔹 Tablet View (max-width: 1024px) */
+button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ---------- SUCCESS MESSAGE ---------- */
+.success-message {
+  color: #4caf50;
+  margin-top: 10px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ---------- RESPONSIVE ---------- */
 @media (max-width: 1024px) {
   .popup-content {
     width: 350px;
-    padding: 25px 40px 25px 25px;
-  }
-
-  input,
-  textarea {
-    font-size: 15px;
-    padding: 8px;
-  }
-
-  button[type="submit"] {
-    width: 180px;
-    font-size: 15px;
-    padding: 8px;
-  }
-
-  .close {
-    font-size: 22px;
+    padding: 25px;
   }
 }
 
-/* 🔹 Mobile View (max-width: 600px) */
 @media (max-width: 480px) {
   .popup-content {
     width: 90%;
     padding: 20px;
-    border-radius: 10px;
-  }
-
-  input,
-  textarea {
-    font-size: 14px;
-    padding: 8px;
   }
 
   button[type="submit"] {
     width: 160px;
     font-size: 14px;
-    padding: 8px;
   }
 
-  .close {
-    top: 8px;
-    right: 10px;
-    font-size: 20px;
-  }
-
-  form {
-    gap: 8px;
+  .book-now {
+    bottom: 20px;
+    right: 20px;
+    font-size: 14px;
+    padding: 10px 16px;
   }
 }
 
+/* ---------- ANIMATIONS ---------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
-
-/* Smooth fade + scale animation */
 @keyframes popupFadeIn {
   0% {
     opacity: 0;
@@ -1418,22 +1626,3 @@ button[type="submit"]:hover {
   }
 }
 
-/* Apply animation when popup appears */
-.popup-content {
-  animation: popupFadeIn 0.4s ease forwards;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.popup-overlay {
-  opacity: 0;
-  animation: overlayFadeIn 0.3s ease forwards;
-}
-
-@keyframes overlayFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}

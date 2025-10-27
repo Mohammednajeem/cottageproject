@@ -69,7 +69,7 @@ export default function Attractions() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Prev & Next buttons for mobile/tablet
+  // Prev & Next buttons
   const prev = () => {
     setActive((prev) => (prev === 0 ? attractions.length - 1 : prev - 1));
   };
@@ -93,10 +93,9 @@ export default function Attractions() {
     return attractions;
   };
 
-  // Calculate which attraction's text to show
+  // Get text for current visible slide
   const getActiveAttraction = () => {
     if (device === "tablet") {
-      // Always show the center image (index 1)
       const visible = getVisibleAttractions();
       return visible[1];
     }
@@ -126,8 +125,7 @@ export default function Attractions() {
               <div
                 key={index}
                 className={`attraction-slide ${
-                  device === "desktop" &&
-                  active === attractions.indexOf(attr)
+                  device === "desktop" && active === attractions.indexOf(attr)
                     ? "active"
                     : ""
                 }`}
@@ -154,7 +152,7 @@ export default function Attractions() {
           )}
         </div>
 
-        <div key={activeAttr.title} className="attraction-content fade-text">
+        <div key={activeAttr.title} className="attraction-content">
           <div className="header-row">
             <h3>{activeAttr.title}</h3>
             <a
@@ -172,4 +170,3 @@ export default function Attractions() {
     </section>
   );
 }
-

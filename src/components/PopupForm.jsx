@@ -10,85 +10,79 @@ const PopupForm = ({ onClose }) => {
   });
 
   const [isSent, setIsSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const sendEmail = (e) => {
-  e.preventDefault();
+  const sendEmail = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
 
-  const currentData = { ...formData };
+    const currentData = { ...formData };
 
-  const ownerMessage = `
-    🌿 *New Inquiry from The Reeds Cottage Website* 🌿
-
-    -----------------------------------
-    Name: ${currentData.name}
-    Phone: ${currentData.phone}
-    Email: ${currentData.email}
-    Message:
-    ${currentData.message}
-    -----------------------------------
-
-    📬 Please reply directly to: ${currentData.email}
-  `;
-
-  const senderMessage = `
-    Hey ${currentData.name}, 👋
-
-    Thanks for reaching out to *The Reeds Cottage*! 🌿  
-    We’ve received your message and our team will contact you soon.
-
-    Here’s a copy of what you sent:
-    -----------------------------------
-    ${currentData.message}
-    -----------------------------------
-
-    Until then, feel free to check out our updates or reach us directly at thereedscottage@gmail.com 💌  
-    Warm regards,  
-    *The Reeds Cottage Team*
-  `;
-
-  setFormData({ name: "", phone: "", email: "", message: "" });
-
-  // 1️⃣ Send mail to Owner
-  emailjs
-    .send(
-      "service_ijo77kr",
-      "template_9aohi2h",
-      {
-        to_email: "thereedscottage@gmail.com", // OWNER EMAIL
-        from_name: currentData.name,
-        from_email: currentData.email,
-        reply_to: currentData.email,
-        message: ownerMessage,
-      },
-      "JcDAWDu_BOE3PqWhQ"
-    )
-    .then(() => {
-      // 2️⃣ Send greeting mail to Sender
-      return emailjs.send(
-        "service_ijo77kr",
-        "template_9aohi2h",
+    try {
+      // 1️⃣ Mail to OWNER
+      await emailjs.send(
+        "service_ijo77kr", // Your service ID
+        "template_9aohi2h", // Your template ID
         {
-          to_email: currentData.email, // USER EMAIL
-          from_name: "The Reeds Cottage",
-          reply_to: "thereedscottage@gmail.com",
-          message: senderMessage,
+          // must match your template vars
+          name: currentData.name,
+          email: "thereedscottage@gmail.com", // owner email
+          message: `
+New inquiry received 🌿
+
+Name: ${currentData.name}
+Phone: ${currentData.phone}
+Email: ${currentData.email}
+
+Message:
+${currentData.message}
+
+📬 Please reply to: ${currentData.email}
+          `,
+          title: "Website Inquiry",
+        },
+        "JcDAWDu_BOE3PqWhQ" // Your public key
+      );
+
+      // 2️⃣ Mail to SENDER
+      await emailjs.send(
+        "service_ijo77kr",
+        "template_46sx0ip",
+        {
+          name: "The Reeds Cottage",
+          email: currentData.email,
+          message: `
+Hey ${currentData.name}, 👋
+
+Thanks for reaching out to The Reeds Cottage 🌿  
+We’ve received your message and will get back to you soon.
+
+Here’s a copy of what you sent:
+-----------------------------------
+${currentData.message}
+-----------------------------------
+
+Warm regards,  
+The Reeds Cottage Team 💌
+          `,
+          title: "Thank you for contacting us",
         },
         "JcDAWDu_BOE3PqWhQ"
       );
-    })
-    .then(() => {
+
       setIsSent(true);
+      setFormData({ name: "", phone: "", email: "", message: "" });
+
       setTimeout(() => setIsSent(false), 4000);
-    })
-    .catch((err) => {
-      console.error("Email send failed:", err);
-    });
-};
-
-
+    } catch (error) {
+      console.error("Email send failed:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="popup-overlay" onClick={onClose}>
@@ -97,6 +91,7 @@ const PopupForm = ({ onClose }) => {
           &times;
         </span>
         <h2>Contact Form</h2>
+
         <form onSubmit={sendEmail}>
           <label>Name</label>
           <input
@@ -134,9 +129,12 @@ const PopupForm = ({ onClose }) => {
             placeholder="Enter your description"
             value={formData.message}
             onChange={handleChange}
+            required
           ></textarea>
 
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Sending..." : "Submit"}
+          </button>
         </form>
 
         {isSent && (
