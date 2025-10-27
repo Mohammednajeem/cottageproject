@@ -1,39 +1,93 @@
-import React, {useState } from "react";
-import emailjs from 'emailjs-com';
-
-
-
+import React, { useState } from "react";
+import emailjs from "emailjs-com";
 
 const PopupForm = ({ onClose }) => {
-  
   const [formData, setFormData] = useState({
     name: "",
+    phone: "",
     email: "",
     message: "",
   });
 
+  const [isSent, setIsSent] = useState(false);
+
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-
 
   const sendEmail = (e) => {
   e.preventDefault();
 
-  emailjs.sendForm(
-    'service_ijo77kr',     
-    'template_9aohi2h',  
-    e.target,
-    'JcDAWDu_BOE3PqWhQ'      
-  ).then(() => {
-    alert('Mail sent successfully');
-    
-    setFormData({ name: "", phone: "", email: "", message: "" });
-    
+  const currentData = { ...formData };
 
-  }).catch((err) => {
-    alert('Failed to send mail');
-  });
+  const ownerMessage = `
+    🌿 *New Inquiry from The Reeds Cottage Website* 🌿
+
+    -----------------------------------
+    Name: ${currentData.name}
+    Phone: ${currentData.phone}
+    Email: ${currentData.email}
+    Message:
+    ${currentData.message}
+    -----------------------------------
+
+    📬 Please reply directly to: ${currentData.email}
+  `;
+
+  const senderMessage = `
+    Hey ${currentData.name}, 👋
+
+    Thanks for reaching out to *The Reeds Cottage*! 🌿  
+    We’ve received your message and our team will contact you soon.
+
+    Here’s a copy of what you sent:
+    -----------------------------------
+    ${currentData.message}
+    -----------------------------------
+
+    Until then, feel free to check out our updates or reach us directly at thereedscottage@gmail.com 💌  
+    Warm regards,  
+    *The Reeds Cottage Team*
+  `;
+
+  setFormData({ name: "", phone: "", email: "", message: "" });
+
+  // 1️⃣ Send mail to Owner
+  emailjs
+    .send(
+      "service_ijo77kr",
+      "template_9aohi2h",
+      {
+        to_email: "thereedscottage@gmail.com", // OWNER EMAIL
+        from_name: currentData.name,
+        from_email: currentData.email,
+        reply_to: currentData.email,
+        message: ownerMessage,
+      },
+      "JcDAWDu_BOE3PqWhQ"
+    )
+    .then(() => {
+      // 2️⃣ Send greeting mail to Sender
+      return emailjs.send(
+        "service_ijo77kr",
+        "template_9aohi2h",
+        {
+          to_email: currentData.email, // USER EMAIL
+          from_name: "The Reeds Cottage",
+          reply_to: "thereedscottage@gmail.com",
+          message: senderMessage,
+        },
+        "JcDAWDu_BOE3PqWhQ"
+      );
+    })
+    .then(() => {
+      setIsSent(true);
+      setTimeout(() => setIsSent(false), 4000);
+    })
+    .catch((err) => {
+      console.error("Email send failed:", err);
+    });
 };
+
 
 
   return (
@@ -53,15 +107,16 @@ const PopupForm = ({ onClose }) => {
             onChange={handleChange}
             required
           />
+
           <label>Phone Number</label>
-            <input
-              type="tel"
-              name="phone"
-              placeholder="Enter your phone number"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-            />
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Enter your phone number"
+            value={formData.phone}
+            onChange={handleChange}
+            required
+          />
 
           <label>Email</label>
           <input
@@ -83,6 +138,13 @@ const PopupForm = ({ onClose }) => {
 
           <button type="submit">Submit</button>
         </form>
+
+        {isSent && (
+          <p className="success-message">
+            ✅ Message sent successfully! <br />
+            Check your email for a copy 🌿
+          </p>
+        )}
       </div>
     </div>
   );

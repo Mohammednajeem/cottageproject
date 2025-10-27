@@ -10,14 +10,19 @@ import { BiWorld } from "react-icons/bi";
 
 function About() {
   return (
-    <section className="about"
-  
-      style={{
-        backgroundImage: `url(${bgImage})`,
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundSize: "cover"
-      }}>
+    <section
+  className="about-section"
+  style={{
+    backgroundImage: `url(${bgImage})`,
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center center",
+    backgroundAttachment: "fixed",
+    backgroundSize: "cover",
+    filter: "none", 
+    imageRendering: "crisp-edges", // forces browser to render sharply
+  }}
+>
+
       
       <p class="about-description">
     Nestled amidst the lush green hills of Kodaikanal, The Reed’s Cottage offers a perfect blend of comfort, charm, and tranquility. Whether you’re here for a family vacation, a weekend getaway, or a romantic retreat, our homestay ensures an unforgettable experience.

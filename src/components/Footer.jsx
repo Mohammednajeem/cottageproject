@@ -19,7 +19,7 @@ function Footer() {
         <a href=""><FaLocationDot /> Direction</a>
         <a href=""><FaPhoneAlt /> +91 9500996592</a>
       </div>
-      <p>17, Attuvampatty, near Mother Teresa Women's University, Kodaikanal, TN 624101</p>
+      <p className="para2">17, Attuvampatty, near Mother Teresa Women's University, Kodaikanal, TN 624101</p>
       
     </footer>
   );
