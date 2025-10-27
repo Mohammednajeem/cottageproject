@@ -36,10 +36,10 @@ function Gallery() {
       ref={sectionRef}
       className={`gallery ${isVisible ? "is-visible" : ""}`} // ✅ fixed
       style={{
-        backgroundImage: `url(${bgImage})`, // ✅ fixed
+        backgroundImage: `url(${bgImage})`,
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
-        backgroundSize: "cover",
+        backgroundSize: "cover"
       }}
     >
       <h2 className="headers">A Glimpse Into Your Stay</h2>

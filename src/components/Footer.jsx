@@ -45,7 +45,7 @@ function Footer() {
 
       <div className="links">
         <a
-          href="https://maps.app.goo.gl/yourlocation" // You can replace with actual link
+          href="https://maps.app.goo.gl/QUakVihvWifKPTZL7" // You can replace with actual link
           target="_blank"
           rel="noreferrer"
         >

@@ -39,11 +39,8 @@ function About() {
       style={{
         backgroundImage: `url(${bgImage})`,
         backgroundRepeat: "no-repeat",
-        backgroundPosition: "center center",
-        backgroundAttachment: "fixed",
-        backgroundSize: "cover",
-        filter: "none",
-        imageRendering: "crisp-edges",
+        backgroundPosition: "center",
+        backgroundSize: "cover"
       }}
     >
       <p className="about-description">

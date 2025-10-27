@@ -27,7 +27,6 @@ function App() {
       <About />
       <Home />
       <Gallery />
-    
       <Attractions/>
       <Footer />
       

@@ -5,6 +5,7 @@ body {
   color: #ffffff;
 }
 
+
 .app {
   overflow-x: hidden;
 }
@@ -21,7 +22,7 @@ body {
   text-align: center;
   padding-bottom: 100px;
   overflow: hidden;
-  animation: bgZoom 10s ease-in-out infinite alternate; /* background smooth zoom */
+  /* animation: bgZoom 10s ease-in-out infinite alternate; background smooth zoom */
 }
 
 .hero .overlay {
@@ -102,10 +103,10 @@ body {
 
 @keyframes bgZoom {
   from {
-    transform: scale(1);
+    background-size: 100%;
   }
   to {
-    transform: scale(1.05);
+    background-size: 105%;
   }
 }
 
@@ -675,271 +676,265 @@ body {
 @import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
 
+
+
+
+
+
+
+
+
+
 /* ============================= */
 /* BASE SECTION STYLES */
 /* ============================= */
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Poppins:wght@300;400;500&display=swap');
+
+/* ==================== */
+/* Base Styles */
+/* ==================== */
+/* ==================== */
+/* Base Styles */
+/* ==================== */
 .attraction-section {
   padding: 80px 20px;
   background-color: #0e1712;
-  text-align: center;
   color: white;
   font-family: "Marcellus", serif;
-  position: relative;
+  background-size: cover;
+  background-position: center;
 }
 
-/* Overlay for background image */
-.attraction-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.3);
-  z-index: 0;
-}
-
-.attraction-main {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  z-index: 1;
-}
-
-/* ============================= */
-/* TITLE STYLES */
-/* ============================= */
-.attraction-title h2 {
-  text-align: left;
-  font-family: 'Marcellus', serif;
-  font-weight: 400;
-  font-style: normal;
+.attraction-title {
   font-size: 54px;
-  line-height: 100%;
-  letter-spacing: 0%;
+  color: #8b9f8b;
+  text-align: left;
   margin-left: 50px;
-  color: #8B9F8B;
-}
-
-/* ============================= */
-/* CAROUSEL CONTAINER */
-/* ============================= */
-.attraction-visit {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-left: 100px;
-  padding-right: 100px;
-  padding-bottom: 100px;
-  min-width: 800px;
-  gap: 20px;
-}
-
-.carousel-container {
-  padding-left: 50px;
-  padding-right: 50px;
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin-bottom: 30px;
 }
 
 .images-row {
   display: flex;
-  flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   gap: 10px;
+  transition: all 0.5s ease;
+  position: relative;
 }
 
 .attraction-slide {
   flex: 1;
-  border-radius: 0.75rem;
-  cursor: pointer;
+  opacity: 0.6;
+  border-radius: 20px;
   overflow: hidden;
-  transition: flex 0.5s ease-in-out;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  cursor: pointer;
+  transition: all 0.6s ease-in-out;
 }
 
-img {
-  height: 300px;
-  max-width: 100%;
+.attraction-slide img {
+  width: 100%;
+  height: 600px;
   object-fit: cover;
-  display: block;
-  margin: 0 auto;
+  border-radius: 20px;
+  transition: transform 0.6s ease, filter 0.6s ease;
 }
 
-.attraction-slide:hover {
-  flex: 2.0;
+/* ✅ Active Image */
+.attraction-slide.active {
+  flex: 2.2;
+  opacity: 1;
 }
 
-/* Hide content on slide hover (desktop only) */
+.attraction-slide.active img {
+  transform: scale(1.15);
+  filter: brightness(1.35) contrast(1.1);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+/* ==================== */
+/* ✅ Desktop (Hover Mode) */
+/* ==================== */
 @media (min-width: 993px) {
-  .attraction-slide:hover ~ .attraction-content,
-  .attraction-slide:hover + .attraction-content {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+  .attraction-slide {
+    border-radius: 0;
+    border: none;
+    transition: all 0.6s ease-in-out;
+  }
+
+  .attraction-slide img {
+    border-radius: 0;
+    transition: transform 0.6s ease, filter 0.6s ease;
+  }
+
+  .images-row {
+    gap: 15px;
+  }
+
+  /* Make sure all slides start in same state */
+  .attraction-slide {
+    opacity: 0.6;
+  }
+
+  .attraction-slide img {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+
+  /* Hover effects */
+  .attraction-slide:hover {
+    flex: 2.2;
+    opacity: 1;
+  }
+
+  .attraction-slide:hover img {
+    transform: scale(1.15);
+    filter: brightness(1.35) contrast(1.1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Non-hovered shrink */
+  .images-row:hover .attraction-slide:not(:hover) {
+    flex: 0.8;
+    opacity: 0.4;
+  }
+
+  /* Disable forced active state */
+  .attraction-slide.active img {
+    transform: scale(1);
+    filter: brightness(1);
+    box-shadow: none;
+  }
+
+  /* ==================== */
+  /* ❌ Disable Hover in Carousel Mode */
+  /* ==================== */
+  .images-row.carousel-mode .attraction-slide:hover {
+    flex: 1;
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  .images-row.carousel-mode .attraction-slide:hover img {
+    transform: scale(1);
+    filter: brightness(1);
+    box-shadow: none;
+  }
+
+  .images-row.carousel-mode:hover .attraction-slide:not(:hover) {
+    flex: 1;
+    opacity: 0.6;
   }
 }
 
-/* ============================= */
-/* CAROUSEL ARROWS */
-/* ============================= */
+/* ✅ Carousel Arrows */
 .carousel-arrows {
   position: absolute;
   top: 50%;
-  left: 0;
-  right: 0;
+  width: 100%;
   transform: translateY(-50%);
   display: flex;
   justify-content: space-between;
-  padding: 0 10px;
+  padding: 0 20px;
 }
 
 .carousel-arrows button {
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
   border: none;
-  padding: 10px;
+  color: #fff;
+  font-size: 28px;
+  font-weight: bold;
+  padding: 10px 18px;
+  border-radius: 50%;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: 0.3s ease;
 }
 
 .carousel-arrows button:hover {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.6);
+  transform: scale(1.1);
 }
 
-/* ============================= */
-/* CONTENT STYLES */
-/* ============================= */
+/* ✅ Content */
 .attraction-content {
-  width: 100%;
-  text-align: center;
-  padding: 50px;
-  transition: opacity 0.3s ease, visibility 0.3s ease; /* For hover effect */
+  margin-top: 40px;
+  padding: 0 50px;
+  transition: all 0.3s ease;
 }
 
 .header-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .attraction-content h3 {
-  font-family: 'Marcellus', serif;
   font-size: 36px;
-  margin: 0;
-  color: #bfbfbf;
-}
-
-.para1 {
-  font-family: 'Poppins', sans-serif;
-  text-align: left;
-  font-size: 18px;
-  line-height: 1.5;
-  max-width: 80%;
-  margin: 0 auto;
   color: #bfbfbf;
 }
 
 .attraction-links {
-  width: 100px;
-  padding: 10px;
-  background-color: #8B9F8B;
+  background: #8b9f8b;
   color: #000;
+  padding: 10px 16px;
+  border-radius: 8px;
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 8px;
-  border-radius: 5px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 400;
-  transition: background 0.3s ease;
+  gap: 6px;
 }
 
-.attraction-links:hover {
-  background-color: #b3c4b3;
+.para1 {
+  font-size: 18px;
+  color: #bfbfbf;
+  margin-top: 15px;
+  line-height: 1.6;
 }
 
-/* ============================= */
-/* TABLET LAYOUT (426px - 992px) */
-/* ============================= */
-@media (min-width: 426px) and (max-width: 992px) {
-  .carousel-arrows {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    transform: translateY(-50%);
-    display: flex;
-    justify-content: space-between;
-    padding: 0 20px;
-  }
-
-  .carousel-arrows button {
-    background: rgba(0, 0, 0, 0.45);
-  }
-
-  .images-row.tablet {
+/* ==================== */
+/* ✅ Tablet (Center Wider) */
+/* ==================== */
+@media (max-width: 992px) and (min-width: 481px) {
+  .images-row {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
-    position: relative;
+    gap: 12px;
   }
 
-  .images-row.tablet .attraction-slide {
-    flex: 0 0 30%;
-    transition: transform 0.4s ease, opacity 0.4s ease;
+  .attraction-slide {
+    flex: 1;
+    opacity: 0.5;
+    transition: all 0.5s ease;
+    border: none;
+    border-radius: 0;
   }
 
-  .images-row.tablet .attraction-slide {
-    transform: scale(0.9);
-    opacity: 0.7;
-  }
-
-  .images-row.tablet .attraction-slide:nth-child(2) {
-    transform: scale(1.1);
+  /* Center image even wider */
+  .attraction-slide:nth-child(2) {
+    flex: 2.8; /* was 2.4, now wider */
     opacity: 1;
-    z-index: 3;
   }
 
-  .images-row.tablet .attraction-slide img {
-    width: 100%;
-    height: 280px;
-    object-fit: cover;
-    border-radius: 20px;
-    transition: all 0.4s ease;
+  .attraction-slide:nth-child(2) img {
+    transform: scale(1.18);
+    filter: brightness(1.4) contrast(1.15);
   }
 
-  .images-row.tablet .attraction-slide:nth-child(2) img {
-    border-radius: 35px;
-    mask-image: radial-gradient(circle at center, black 90%, transparent 100%);
-    -webkit-mask-image: radial-gradient(circle at center, black 90%, transparent 100%);
-    filter: brightness(1.08) contrast(1.05) saturate(1.1);
-    box-shadow:
-      0 8px 20px rgba(0, 0, 0, 0.45),
-      0 0 15px rgba(255, 255, 255, 0.1);
-    transition: all 0.4s ease;
+  .attraction-slide img {
+    height: 600px;
+    border-radius: 0;
   }
 
-  .attraction-title h2 {
-    font-size: 40px;
-    margin-left: 30px;
-  }
-
-  .attraction-visit {
-    padding: 40px 20px;
-    min-width: auto;
+  .attraction-title {
+    font-size: 38px;
+    margin-left: 20px;
   }
 
   .attraction-content {
-    padding: 30px;
+    padding: 0 25px;
+    margin-top: 35px;
   }
 
   .attraction-content h3 {
@@ -948,78 +943,49 @@ img {
 
   .para1 {
     font-size: 16px;
-    max-width: 90%;
+    line-height: 1.7;
   }
 }
 
-/* ============================= */
-/* MOBILE LAYOUT (max-width: 425px) */
-/* ============================= */
-@media (max-width: 425px) {
-  .carousel-arrows {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    transform: translateY(-50%);
+/* ==================== */
+/* ✅ Mobile */
+/* ==================== */
+@media (max-width: 480px) {
+  .images-row {
     display: flex;
-    justify-content: space-between;
-    padding: 0 15px;
-    pointer-events: none;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
   }
 
-  .carousel-arrows button {
-    pointer-events: all;
-    background: rgba(0, 0, 0, 0.5);
+  .attraction-slide {
+    flex: 0 0 100%;
+    opacity: 1;
+    transition: all 0.4s ease;
+    border: none;
+    border-radius: 0;
   }
 
-  .attraction-title h2 {
-    font-size: 26px;
-    line-height: 1.2;
-    margin-left: 20px;
-    text-align: left;
-  }
-
-  .attraction-visit {
-    padding: 40px 20px;
-    min-width: auto;
-    gap: 15px;
+  .attraction-slide img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    border-radius: 0;
   }
 
   .attraction-content {
-    padding: 20px;
+    padding: 0 20px;
+    margin-top: 25px;
   }
 
   .attraction-content h3 {
-    font-size: 20px;
-    line-height: 1.3;
+    font-size: 26px;
   }
 
   .para1 {
-    font-size: 14px;
-    line-height: 1.5;
-    max-width: 100%;
-    margin: 0 auto;
-    text-align: justify;
-  }
-
-  .attraction-links {
-    width: auto;
-    padding: 8px 16px;
-    font-size: 14px;
-  }
-
-  .attraction-image img,
-  .images-row img {
-    height: 220px;
-    width: 100%;
-    object-fit: cover;
-    border-radius: 16px;
-  }
-
-  .images-row {
-    gap: 8px;
-    flex-direction: column;
+    font-size: 15px;
+    line-height: 1.6;
   }
 }
 
@@ -1027,12 +993,15 @@ img {
 
 
 
-@import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 
-/* ============================= */
-/* BASE FOOTER STYLES */
-/* ============================= */
+
+
+
+
+
+
+/* footer */
+
 .footer {
   background-color: #0a120d;
   text-align: center;
@@ -1252,6 +1221,23 @@ img {
     height: 2px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

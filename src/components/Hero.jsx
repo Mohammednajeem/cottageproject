@@ -1,13 +1,13 @@
 import React from "react";
-import { motion, px } from "framer-motion";
-import bgImage from "../cottageimages/Image1.png"
+import { motion } from "framer-motion";
+import bgImage from "../cottageimages/Image1.png";
 
 function Hero() {
   return (
     <section
       className="hero"
       style={{
-        backgroundImage: `url(${bgImage}`,
+        backgroundImage: `url(${bgImage})`,
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundSize: "cover"
@@ -22,7 +22,6 @@ function Hero() {
       >
         <h1>The Reed's Cottage</h1>
         <p>Your Cozy Escape in the Heart of Kodaikanal</p>
-        
       </motion.div>
     </section>
   );
