@@ -641,6 +641,9 @@ body {
 
 /* GALLERY SECTION */
 
+/* ============================= */
+/* GALLERY SECTION */
+/* ============================= */
 .gallery {
   padding: 80px 20px;
   background-color: #0e1712;
@@ -661,7 +664,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.3); 
+  background: rgba(0, 0, 0, 0.3);
   z-index: 0;
 }
 
@@ -670,22 +673,21 @@ body {
   z-index: 1;
 }
 
-
+/* ============================= */
 /* SECTION HEADER */
-
+/* ============================= */
 .headers {
   font-family: 'Marcellus', serif;
   font-weight: 400;
   font-style: normal;
   font-size: 54px;
   line-height: 100%;
-  letter-spacing: 0;
   color: #8B9F8B;
   text-align: left;
   margin-left: 100px;
   margin-bottom: 20px;
   opacity: 0; 
-  transform: translateY(20px); 
+  transform: translateY(20px);
 }
 
 /* Trigger animation when visible */
@@ -693,8 +695,9 @@ body {
   animation: fadeUp 1s ease forwards 0.3s;
 }
 
+/* ============================= */
 /* BASE LAYOUT */
-
+/* ============================= */
 .gallery-grid {
   display: flex;
   flex-direction: column;
@@ -705,7 +708,7 @@ body {
   justify-content: center;
   align-items: center;
   opacity: 0; 
-  transform: translateY(30px); 
+  transform: translateY(30px);
 }
 
 /* Trigger animation when visible */
@@ -720,8 +723,8 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  opacity: 0; 
-  transform: translateY(30px); 
+  opacity: 0;
+  transform: translateY(30px);
 }
 
 /* Trigger animation when visible */
@@ -736,9 +739,9 @@ body {
   gap: 10px;
 }
 
-
+/* ============================= */
 /* IMAGE STYLES */
-
+/* ============================= */
 .ima1,
 .ima2,
 .ima4 {
@@ -748,7 +751,7 @@ body {
   cursor: pointer;
   filter: brightness(0.9);
   opacity: 0; 
-  transform: scale(0.95); 
+  transform: scale(0.95);
 }
 
 /* Trigger animations when visible with different delays */
@@ -766,8 +769,8 @@ body {
 
 .gallery.is-visible .ima4 {
   animation: fadeZoom 1.2s ease forwards 1s;
-  height: 600px;
   width: 1290px;
+  height: 600px;
 }
 
 /* Hover effect: smooth zoom + slight brightness */
@@ -779,9 +782,9 @@ body {
   box-shadow: 0 0 25px rgba(139, 159, 139, 0.4);
 }
 
-
+/* ============================= */
 /* ANIMATIONS */
-
+/* ============================= */
 @keyframes fadeUp {
   0% {
     opacity: 0;
@@ -804,13 +807,51 @@ body {
   }
 }
 
+/* ============================= */
+/* DESKTOP VIEW (Above 1024px) */
+/* ============================= */
+@media (min-width: 1025px) {
+  .gallery {
+    padding: 100px 40px;
+  }
 
-/* TABLET VIEW (Up to 1024px wide) */
+  .headers {
+    font-size: 54px;
+    margin-left: 100px;
+  }
 
+  .gallery-grid {
+    max-width: 1444px;
+  }
+
+  .ima1 {
+    width: 700px;
+    height: 930px;
+  }
+
+  .ima2 {
+    width: 580px;
+    height: 460px;
+  }
+
+  .ima4 {
+    width: 1290px;
+    height: 600px;
+  }
+}
+
+/* ============================= */
+/* TABLET VIEW (Up to 1024px) */
+/* ============================= */
 @media (max-width: 1024px) {
+  .gallery {
+    padding: 70px 20px;
+  }
+
   .headers {
     font-size: 44px;
-    margin-left: 30px;
+    margin-left: 40px;
+    text-align: left;
   }
 
   .gallery-grid {
@@ -840,9 +881,9 @@ body {
   }
 }
 
-
-/* MOBILE VIEW (Up to 768px wide) */
-
+/* ============================= */
+/* MOBILE VIEW (Up to 768px) */
+/* ============================= */
 @media (max-width: 768px) {
   .gallery {
     padding: 50px 10px;
@@ -862,29 +903,29 @@ body {
 
   .innerimage {
     flex-direction: column;
-    gap: 10px;
     align-items: center;
+    gap: 10px;
   }
 
   .ima1,
   .ima2,
   .ima4 {
-    width: 50%;
+    width: 100%;
     height: auto;
   }
 }
 
-
-/* SMALL MOBILE VIEW (Up to 480px wide) */
-
+/* ============================= */
+/* SMALL MOBILE VIEW (Up to 480px) */
+/* ============================= */
 @media (max-width: 480px) {
+  .gallery {
+    padding: 40px 10px;
+  }
+
   .headers {
     font-size: 28px;
     margin-bottom: 20px;
-  }
-
-  .gallery {
-    padding: 40px 10px;
   }
 
   .outerimage {
@@ -894,10 +935,11 @@ body {
   .ima1,
   .ima2,
   .ima4 {
-    width: 50%;
+    width: 100%;
     height: auto;
   }
 }
+
 
 @import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
