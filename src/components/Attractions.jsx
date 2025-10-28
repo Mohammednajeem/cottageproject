@@ -6,7 +6,6 @@ import mgImage3 from "../cottageimages/Pine-Forest.jpg";
 import mgImage4 from "../cottageimages/coakers-walk.avif";
 import mgImage5 from "../cottageimages/bryant-park.jpg";
 import mgImage6 from "../cottageimages/pillar-rocks.jpg";
-
 import { FaLocationDot } from "react-icons/fa6";
 
 export default function Attractions() {
@@ -15,14 +14,49 @@ export default function Attractions() {
   const [device, setDevice] = useState("desktop");
 
   const attractions = [
-    { image: mgImage1, title: "Kodaikanal Lake", link: "https://maps.app.goo.gl/f2jbbDZwRYAoaovh6", para: "Nestled in the heart of Kodaikanal, this star-shaped man-made lake is one of the hill station’s most iconic attractions." },
-    { image: mgImage2, title: "Guna Cave", link: "https://maps.app.goo.gl/dwTEvS8Spkxn9KdW9", para: "Guna Cave, also known as Devil’s Kitchen, is a mysterious and fascinating spot located amidst the dense forests of Kodaikanal." },
-    { image: mgImage3, title: "Pine Forest", link: "https://maps.app.goo.gl/7xvJpbgjRx34cmZCA", para: "The Pine Forest of Kodaikanal is a mesmerizing stretch of towering pine trees that create a cool, peaceful, and almost magical atmosphere." },
-    { image: mgImage4, title: "Coaker's Walk", link: "https://maps.app.goo.gl/2D11QmvUw5f8k4oMA", para: "Coaker’s Walk is a beautiful, paved pathway offering stunning panoramic views of the valleys and hills." },
-    { image: mgImage5, title: "Bryant Park", link: "https://maps.app.goo.gl/FpvhwattBmGrhdE6A", para: "Bryant Park is a vibrant botanical garden known for its colorful collection of flowers and plants." },
-    { image: mgImage6, title: "Pillar Rocks", link: "https://maps.app.goo.gl/us1DceBb9Ec1pDpm8", para: "Pillar Rocks are breathtaking natural formations — three giant rock pillars rising dramatically amidst misty clouds." },
-    // { image: mgImage6, title: "Pillar Rocks", link: "https://maps.app.goo.gl/us1DceBb9Ec1pDpm8", para: "Pillar Rocks are breathtaking natural formations — three giant rock pillars rising dramatically amidst misty clouds." },
-    // ✅ Try adding more than 6 to see carousel effect on desktop
+    {
+      image: mgImage1,
+      title: "Kodaikanal Lake",
+      link: "https://maps.app.goo.gl/f2jbbDZwRYAoaovh6",
+      para: "Nestled in the heart of Kodaikanal, this star-shaped man-made lake is one of the hill station’s most iconic attractions.",
+    },
+    {
+      image: mgImage2,
+      title: "Guna Cave",
+      link: "https://maps.app.goo.gl/dwTEvS8Spkxn9KdW9",
+      para: "Guna Cave, also known as Devil’s Kitchen, is a mysterious and fascinating spot located amidst the dense forests of Kodaikanal.",
+    },
+    {
+      image: mgImage3,
+      title: "Pine Forest",
+      link: "https://maps.app.goo.gl/7xvJpbgjRx34cmZCA",
+      para: "The Pine Forest of Kodaikanal is a mesmerizing stretch of towering pine trees that create a cool, peaceful, and almost magical atmosphere.",
+    },
+    {
+      image: mgImage4,
+      title: "Coaker's Walk",
+      link: "https://maps.app.goo.gl/2D11QmvUw5f8k4oMA",
+      para: "Coaker’s Walk is a beautiful, paved pathway offering stunning panoramic views of the valleys and hills.",
+    },
+    {
+      image: mgImage5,
+      title: "Bryant Park",
+      link: "https://maps.app.goo.gl/FpvhwattBmGrhdE6A",
+      para: "Bryant Park is a vibrant botanical garden known for its colorful collection of flowers and plants.",
+    },
+    {
+      image: mgImage6,
+      title: "Pillar Rocks",
+      link: "https://maps.app.goo.gl/us1DceBb9Ec1pDpm8",
+      para: "Pillar Rocks are breathtaking natural formations — three giant rock pillars rising dramatically amidst misty clouds.",
+    },
+
+    {
+      image: mgImage6,
+      title: "Pillar Rocks",
+      link: "https://maps.app.goo.gl/us1DceBb9Ec1pDpm8",
+      para: "Pillar Rocks are breathtaking natural formations — three giant rock pillars rising dramatically amidst misty clouds.",
+    },
   ];
 
   useEffect(() => {
@@ -40,7 +74,6 @@ export default function Attractions() {
     setActive((prev) => (prev - 1 + attractions.length) % attractions.length);
   const next = () => setActive((prev) => (prev + 1) % attractions.length);
 
-  // ✅ Desktop behaves like tablet if there are more than 6 attractions
   const desktopCarouselMode = device === "desktop" && attractions.length > 6;
 
   const getVisibleAttractions = () => {
@@ -67,11 +100,11 @@ export default function Attractions() {
 
   return (
     <section
-      className="attraction-section"
+      className={`attraction-section ${
+        desktopCarouselMode ? "carousel-view" : ""
+      }`}
       style={{
         backgroundImage: `url(${bgImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
       }}
     >
       <div className="attraction-main">
@@ -91,7 +124,9 @@ export default function Attractions() {
                   : index === 1;
 
               const isHovered =
-                device === "desktop" && !desktopCarouselMode && hovered === realIndex;
+                device === "desktop" &&
+                !desktopCarouselMode &&
+                hovered === realIndex;
 
               return (
                 <div
@@ -139,6 +174,7 @@ export default function Attractions() {
               target="_blank"
               rel="noreferrer"
               className="attraction-links"
+              onClick={(e) => e.stopPropagation()}
             >
               <FaLocationDot /> Route
             </a>

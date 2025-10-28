@@ -703,6 +703,8 @@ body {
   font-family: "Marcellus", serif;
   background-size: cover;
   background-position: center;
+  position: relative;
+  z-index: 1;
 }
 
 .attraction-title {
@@ -716,6 +718,7 @@ body {
 .images-row {
   display: flex;
   justify-content: center;
+  padding: 0 50px;
   align-items: stretch;
   gap: 10px;
   transition: all 0.5s ease;
@@ -724,22 +727,22 @@ body {
 
 .attraction-slide {
   flex: 1;
-  opacity: 0.6;
-  border-radius: 20px;
+  opacity: 0.7;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.6s ease-in-out;
+  position: relative;
+  z-index: 5;
 }
 
 .attraction-slide img {
   width: 100%;
   height: 600px;
   object-fit: cover;
-  border-radius: 20px;
   transition: transform 0.6s ease, filter 0.6s ease;
+  pointer-events: none;
 }
 
-/* ✅ Active Image */
 .attraction-slide.active {
   flex: 2.2;
   opacity: 1;
@@ -751,79 +754,36 @@ body {
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
 }
 
-/* ==================== */
-/* ✅ Desktop (Hover Mode) */
-/* ==================== */
+/* ✅ Hover works ONLY when not in carousel mode */
 @media (min-width: 993px) {
-  .attraction-slide {
-    border-radius: 0;
-    border: none;
-    transition: all 0.6s ease-in-out;
+  .attraction-section:not(.carousel-view) .images-row:hover .attraction-slide.active:not(:hover) {
+    flex: 1;
+    opacity: 0.7;
   }
 
-  .attraction-slide img {
-    border-radius: 0;
-    transition: transform 0.6s ease, filter 0.6s ease;
-  }
-
-  .images-row {
-    gap: 15px;
-  }
-
-  /* Make sure all slides start in same state */
-  .attraction-slide {
-    opacity: 0.6;
-  }
-
-  .attraction-slide img {
-    transform: scale(1);
-    filter: brightness(1);
-  }
-
-  /* Hover effects */
-  .attraction-slide:hover {
+  .attraction-section:not(.carousel-view) .images-row:hover .attraction-slide:hover {
     flex: 2.2;
     opacity: 1;
   }
 
-  .attraction-slide:hover img {
+  .attraction-section:not(.carousel-view) .images-row:hover .attraction-slide:hover img {
     transform: scale(1.15);
     filter: brightness(1.35) contrast(1.1);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
   }
+}
 
-  /* Non-hovered shrink */
-  .images-row:hover .attraction-slide:not(:hover) {
-    flex: 0.8;
-    opacity: 0.4;
-  }
+/* 🚫 No hover in desktop carousel mode */
+.carousel-view .attraction-slide,
+.carousel-view .attraction-slide:hover {
+  flex: 1;
+  opacity: 0.7;
+  transform: none;
+}
 
-  /* Disable forced active state */
-  .attraction-slide.active img {
-    transform: scale(1);
-    filter: brightness(1);
-    box-shadow: none;
-  }
-
-  /* ==================== */
-  /* ❌ Disable Hover in Carousel Mode */
-  /* ==================== */
-  .images-row.carousel-mode .attraction-slide:hover {
-    flex: 1;
-    opacity: 0.6;
-    cursor: default;
-  }
-
-  .images-row.carousel-mode .attraction-slide:hover img {
-    transform: scale(1);
-    filter: brightness(1);
-    box-shadow: none;
-  }
-
-  .images-row.carousel-mode:hover .attraction-slide:not(:hover) {
-    flex: 1;
-    opacity: 0.6;
-  }
+.carousel-view .attraction-slide.active {
+  flex: 2.2;
+  opacity: 1;
 }
 
 /* ✅ Carousel Arrows */
@@ -835,6 +795,7 @@ body {
   display: flex;
   justify-content: space-between;
   padding: 0 20px;
+  z-index: 15;
 }
 
 .carousel-arrows button {
@@ -859,7 +820,8 @@ body {
 .attraction-content {
   margin-top: 40px;
   padding: 0 50px;
-  transition: all 0.3s ease;
+  position: relative;
+  z-index: 20;
 }
 
 .header-row {
@@ -882,6 +844,15 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: 0.3s ease;
+  z-index: 30;
+}
+
+.attraction-links:hover {
+  background: #a5c7a5;
 }
 
 .para1 {
@@ -891,40 +862,21 @@ body {
   line-height: 1.6;
 }
 
-/* ==================== */
-/* ✅ Tablet (Center Wider) */
-/* ==================== */
+/* ✅ Tablet */
 @media (max-width: 992px) and (min-width: 481px) {
   .images-row {
-    position: relative;
-    display: flex;
     justify-content: center;
     align-items: center;
     gap: 12px;
   }
 
-  .attraction-slide {
-    flex: 1;
-    opacity: 0.5;
-    transition: all 0.5s ease;
-    border: none;
-    border-radius: 0;
-  }
-
-  /* Center image even wider */
   .attraction-slide:nth-child(2) {
-    flex: 2.8; /* was 2.4, now wider */
+    flex: 2.5;
     opacity: 1;
   }
 
-  .attraction-slide:nth-child(2) img {
-    transform: scale(1.18);
-    filter: brightness(1.4) contrast(1.15);
-  }
-
   .attraction-slide img {
-    height: 600px;
-    border-radius: 0;
+    height: 500px;
   }
 
   .attraction-title {
@@ -934,7 +886,6 @@ body {
 
   .attraction-content {
     padding: 0 25px;
-    margin-top: 35px;
   }
 
   .attraction-content h3 {
@@ -943,51 +894,49 @@ body {
 
   .para1 {
     font-size: 16px;
-    line-height: 1.7;
   }
 }
 
-/* ==================== */
 /* ✅ Mobile */
-/* ==================== */
 @media (max-width: 480px) {
   .images-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
     overflow: hidden;
   }
 
   .attraction-slide {
     flex: 0 0 100%;
-    opacity: 1;
-    transition: all 0.4s ease;
-    border: none;
-    border-radius: 0;
   }
 
   .attraction-slide img {
     width: 100%;
-    height: 600px;
-    object-fit: cover;
-    border-radius: 0;
+    height: 400px;
+  }
+
+  .attraction-title {
+    font-size: 28px;
+    text-align: center;
+    margin-left: 0;
   }
 
   .attraction-content {
     padding: 0 20px;
-    margin-top: 25px;
   }
 
   .attraction-content h3 {
-    font-size: 26px;
+    font-size: 24px;
   }
 
   .para1 {
     font-size: 15px;
-    line-height: 1.6;
   }
 }
+
+
+
+
+
+
+
 
 
 
