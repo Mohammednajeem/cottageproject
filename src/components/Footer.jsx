@@ -7,7 +7,7 @@ function Footer() {
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  // Intersection Observer
+  // Intersection Observer for scroll animation
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -16,7 +16,7 @@ function Footer() {
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.2 }
     );
 
     if (sectionRef.current) {
@@ -31,9 +31,9 @@ function Footer() {
   return (
     <footer
       ref={sectionRef}
-      className={`footer ${isVisible ? "is-visible" : ""}`} // ✅ Fixed
+      className={`footer ${isVisible ? "is-visible" : ""}`}
       style={{
-        backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${bgImage})`, // ✅ Fixed
+        backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${bgImage})`,
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundSize: "cover",
@@ -45,7 +45,7 @@ function Footer() {
 
       <div className="links">
         <a
-          href="https://maps.app.goo.gl/QUakVihvWifKPTZL7" // You can replace with actual link
+          href="https://maps.app.goo.gl/QUakVihvWifKPTZL7"
           target="_blank"
           rel="noreferrer"
         >

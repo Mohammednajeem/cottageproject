@@ -57,6 +57,8 @@ export default function Attractions() {
       link: "https://maps.app.goo.gl/us1DceBb9Ec1pDpm8",
       para: "Pillar Rocks are breathtaking natural formations — three giant rock pillars rising dramatically amidst misty clouds.",
     },
+
+    
   ];
 
   useEffect(() => {
@@ -74,86 +76,69 @@ export default function Attractions() {
     setActive((prev) => (prev - 1 + attractions.length) % attractions.length);
   const next = () => setActive((prev) => (prev + 1) % attractions.length);
 
-  const desktopCarouselMode = device === "desktop" && attractions.length > 6;
-
   const getVisibleAttractions = () => {
     if (device === "mobile") return [attractions[active]];
-    if (device === "tablet" || desktopCarouselMode) {
-      const leftIndex = (active - 1 + attractions.length) % attractions.length;
-      const centerIndex = active;
-      const rightIndex = (active + 1) % attractions.length;
-      return [
-        attractions[leftIndex],
-        attractions[centerIndex],
-        attractions[rightIndex],
-      ];
+    if (device === "tablet") {
+      const left = (active - 1 + attractions.length) % attractions.length;
+      const center = active;
+      const right = (active + 1) % attractions.length;
+      return [attractions[left], attractions[center], attractions[right]];
+    }
+    if (device === "desktop" && attractions.length > 6) {
+      const visible = [];
+      for (let i = 0; i < 6; i++) {
+        visible.push(attractions[(active + i) % attractions.length]);
+      }
+      return visible;
     }
     return attractions;
   };
 
   const visible = getVisibleAttractions();
-
   const activeAttr =
-    device === "desktop" && !desktopCarouselMode && hovered !== null
+    device === "desktop" && hovered !== null
       ? attractions[hovered]
       : attractions[active];
 
   return (
     <section
       className={`attraction-section ${
-        desktopCarouselMode ? "carousel-view" : ""
+        device === "desktop" && attractions.length > 6 ? "carousel-view" : ""
       }`}
-      style={{
-        backgroundImage: `url(${bgImage})`,
-      }}
+      style={{ backgroundImage: `url(${bgImage})` }}
     >
       <div className="attraction-main">
         <h2 className="attraction-title">Kodaikanal Must Visit</h2>
 
         <div className="carousel-container">
-          <div
-            className={`images-row ${device} ${
-              desktopCarouselMode ? "carousel-mode" : ""
-            }`}
-          >
+          <div className={`images-row ${device}`}>
             {visible.map((attr, index) => {
               const realIndex = attractions.indexOf(attr);
-              const isActive =
-                device === "desktop" && !desktopCarouselMode
-                  ? realIndex === active
-                  : index === 1;
-
-              const isHovered =
-                device === "desktop" &&
-                !desktopCarouselMode &&
-                hovered === realIndex;
+              const isActive = realIndex === active;
+              const isHovered = hovered === realIndex;
 
               return (
                 <div
                   key={index}
                   className={`attraction-slide ${
-                    isActive || isHovered ? "active" : ""
-                  }`}
+                    isActive ? "active" : ""
+                  } ${isHovered ? "hovered" : ""}`}
                   onMouseEnter={() =>
-                    device === "desktop" &&
-                    !desktopCarouselMode &&
-                    setHovered(realIndex)
+                    device === "desktop" && setHovered(realIndex)
                   }
                   onMouseLeave={() =>
-                    device === "desktop" &&
-                    !desktopCarouselMode &&
-                    setHovered(null)
+                    device === "desktop" && setHovered(null)
                   }
                   onClick={() => setActive(realIndex)}
                 >
-                  <div className="attraction-image">
-                    <img src={attr.image} alt={attr.title} />
-                  </div>
+                  <img src={attr.image} alt={attr.title} />
                 </div>
               );
             })}
 
-            {(device === "tablet" || device === "mobile" || desktopCarouselMode) && (
+            {(device === "tablet" ||
+              device === "mobile" ||
+              (device === "desktop" && attractions.length > 6)) && (
               <div className="carousel-arrows">
                 <button className="left-arrow" onClick={prev}>
                   ←

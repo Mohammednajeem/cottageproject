@@ -21,9 +21,12 @@ function Home() {
 
       <motion.div
         className="text-content"
-        initial={{ opacity: 0, y: 60 }}
+        initial={{ opacity: 0, y: 80 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 1, ease: "easeOut" }}
+        transition={{
+          duration: 1.3,
+          ease: [0.25, 0.1, 0.25, 1], // smooth cubic easing
+        }}
       >
         <p>
           At The Reed’s Cottage, it’s not just the climate — it’s the atmosphere
