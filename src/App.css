@@ -992,195 +992,215 @@ html {
 
 
 
+/* Footer.css - animations triggered only when .is-visible is present, reduced-motion safe */
 
+/* KEYFRAMES */
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(22px); }
+  60% { opacity: 1; transform: translateY(-6px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
 
-/* footer */
+@keyframes scaleIn {
+  0% { transform: scale(0.96); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
 
+@keyframes floatSlow {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes scaleLine {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+/* OVERLAY (subtle slow float) */
+.footer-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(0,0,0,0.18), transparent 30%, rgba(0,0,0,0.25));
+  mix-blend-mode: multiply;
+  transform-origin: center;
+  /* animate continuously — lightweight */
+  animation: floatSlow 18s ease-in-out infinite;
+  opacity: 0.9;
+}
+
+/* FOOTER BASE (no entrance animation by default) */
 .footer {
-  background-color: #0a120d;
+  position: relative; /* for overlay */
+  background-color: #08100b;
   text-align: center;
-  padding: 40px 20px;
-  color: #bfbfbf;
+  padding: 48px 20px;
+  color: #d6d6d6;
   overflow: hidden;
-  opacity: 0;
-  transform: translateY(20px); 
-  will-change: opacity, transform; 
-  transition: opacity 0.8s ease, transform 0.8s ease; /* soft transition instead of hard animation */
-}
-
-/* Trigger animation when visible */
-.footer.is-visible {
+  width: 100%;
+  box-sizing: border-box;
+  /* make everything visible but not animated until class present */
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
-/* HORIZONTAL LINE */
+/* HORIZONTAL LINE (no animation until is-visible) */
 .hori {
-  width: 1100px;
+  width: 100%;
+  max-width: 1100px;
   height: 3px;
   background-color: #8B9F8B;
   border: none;
   margin: 0 auto;
-  transform: scaleX(0);
-  opacity: 0;
-  transition: transform 1s ease 0.3s, opacity 1s ease 0.3s;
+  transform-origin: left center;
+  opacity: 0.98;
+  transform: scaleX(0); /* start collapsed */
 }
 
-.footer.is-visible .hori {
-  opacity: 1;
-  transform: scaleX(1);
-}
-
-/* TITLE */
+/* TITLE (initial hidden state) */
 .footer h3 {
   font-family: 'Marcellus', serif;
   font-weight: 400;
-  margin-top: 70px;
-  font-size: 96px;
+  margin-top: 44px;
+  font-size: clamp(36px, 6vw, 96px);
   line-height: 100%;
-  color: #8B9F8B;
+  color: #98b08f;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+  transform-origin: center;
+  transform: translateY(8px) scale(0.995);
+  letter-spacing: 0.6px;
+  text-shadow: 0 2px 14px rgba(0,0,0,0.45);
+  will-change: transform, opacity;
 }
 
-.footer.is-visible h3 {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* SUBTEXT */
+/* SUBTEXT hidden initial */
 .cozyy {
   font-family: 'Poppins', sans-serif;
   font-weight: 300;
-  font-size: 24px;
-  color: #8B9F8B;
-  line-height: 100%;
+  font-size: clamp(16px, 2vw, 24px);
+  color: #b9c6b2;
+  line-height: 1.05;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
+  transform: translateY(8px);
+  will-change: transform, opacity;
+}
+
+/* LINKS BLOCK hidden initial */
+.links {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 28px;
+  opacity: 0;
+  transform: translateY(8px);
+  flex-wrap: wrap;
+}
+
+/* CTA BUTTON — small idle state */
+.links a {
+  padding: 10px 18px;
+  background-color: #8B9F8B;
+  color: #06220a;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: transform 260ms cubic-bezier(.2,.9,.3,1), box-shadow 260ms ease, background-color 220ms ease;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  box-shadow: 0 6px 18px rgba(11,14,9,0.08);
+  transform-origin: center;
+}
+
+/* hover: pop and glow (only on pointer devices) */
+@media (hover: hover) and (pointer: fine) {
+  .links a:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 18px 38px rgba(11,14,9,0.16);
+    background-color: #b3c4b3;
+  }
+}
+
+/* ADDRESS hidden initial */
+.para2 {
+  margin-top: 18px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  font-size: clamp(13px, 1.6vw, 18px);
+  color: #cfcfcf;
+  opacity: 0;
+  transform: translateY(8px);
+  will-change: transform, opacity;
+}
+
+/* ===========================
+   When footer becomes visible
+   =========================== */
+.footer.is-visible {
+  /* subtle pop of container when visible */
+  animation: scaleIn 700ms cubic-bezier(.2,.9,.3,1) both;
+}
+
+/* animate line when in view */
+.footer.is-visible .hori {
+  animation: none;
+  transform: scaleX(1);
+  transition: transform 900ms cubic-bezier(.22,.9,.3,1);
+}
+
+/* staggered animations for children */
+.footer.is-visible h3 {
+  animation: fadeUp 900ms cubic-bezier(.16,1,.28,1) both;
+  animation-delay: 140ms;
 }
 
 .footer.is-visible .cozyy {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ADDRESS */
-.para2 {
-  margin-top: 15px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 300;
-  font-size: 18px;
-  color: #bfbfbf;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease 0.8s, transform 0.8s ease 0.8s;
-}
-
-.footer.is-visible .para2 {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* LINKS */
-.links {
-  display: flex;
-  gap: 50px;
-  justify-content: center;
-  align-items: center;
-  margin-top: 40px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease 1s, transform 0.8s ease 1s;
+  animation: fadeUp 850ms cubic-bezier(.16,1,.28,1) both;
+  animation-delay: 300ms;
 }
 
 .footer.is-visible .links {
-  opacity: 1;
-  transform: translateY(0);
+  animation: fadeUp 850ms cubic-bezier(.16,1,.28,1) both;
+  animation-delay: 480ms;
 }
 
-.links a {
-  padding: 10px 20px;
-  background-color: #8B9F8B;
-  color: #000;
-  text-decoration: none;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 400;
-  letter-spacing: 0.5px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.footer.is-visible .para2 {
+  animation: fadeUp 850ms cubic-bezier(.16,1,.28,1) both;
+  animation-delay: 640ms;
 }
 
-.links a:hover {
-  background-color: #b3c4b3;
-  color: #000;
-  transform: translateY(-3px);
-  box-shadow: 0 0 15px rgba(139, 159, 139, 0.4);
-}
-
-/* TABLET VIEW */
+/* small visual tweaks for accessibility and to avoid overflow */
 @media (max-width: 1024px) {
-  .footer h3 {
-    font-size: 64px;
-    margin-top: 50px;
-  }
-
-  .cozyy {
-    font-size: 20px;
-  }
-
-  .para2 {
-    font-size: 16px;
-  }
-
-  .links {
-    gap: 30px;
-    flex-wrap: wrap;
-  }
-
-  .hori {
-    width: 80%;
-  }
+  .footer { padding: 40px 18px; }
+  .footer h3 { font-size: clamp(30px, 7vw, 64px); margin-top: 36px; }
+  .links { gap: 14px; }
+  .hori { max-width: 80%; }
 }
 
-/* MOBILE VIEW */
 @media (max-width: 600px) {
-  .footer {
-    padding: 30px 10px;
-  }
+  .footer { padding: 32px 14px; }
+  .footer h3 { font-size: 42px; margin-top: 26px; }
+  .cozyy { font-size: 16px; }
+  .para2 { font-size: 14px; }
+  .links { flex-direction: column; gap: 12px; margin-top: 22px; }
+  .links a { width: 82%; justify-content: center; }
+  .hori { max-width: 90%; height: 2px; }
+}
 
-  .footer h3 {
-    font-size: 42px;
-    margin-top: 30px;
-  }
-
-  .cozyy {
-    font-size: 18px;
-  }
-
-  .para2 {
-    font-size: 14px;
-  }
-
-  .links {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .links a {
-    width: 80%;
-    font-size: 16px;
-  }
-
-  .hori {
-    width: 90%;
-    height: 2px;
+/* Respect reduced motion — turn off fancy animation if user prefers */
+@media (prefers-reduced-motion: reduce) {
+  .footer-overlay { animation: none !important; }
+  .footer, .hori, .footer h3, .cozyy, .links, .para2 {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
   }
 }
+
 
 
 
