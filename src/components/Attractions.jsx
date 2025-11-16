@@ -55,7 +55,7 @@ export default function Attractions() {
       image: mgImage6,
       title: "Pillar Rocks",
       link: "https://maps.app.goo.gl/us1DceBb9Ec1pDpm8",
-      para: "Pillar Rocks are breathtaking natural formations — three giant rock pillars rising dramatically amidst misty clouds.",
+      para: "Pillar Rocksss are breathtaking natural formations — three giant rock pillars rising dramatically amidst misty clouds.",
     },
 
     
